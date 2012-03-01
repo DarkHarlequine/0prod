@@ -8,12 +8,13 @@ channel = connection.channel()
 
 channel.queue_declare(queue='rpc_queue')
 
-def on_request(ch, method, props, body):     "не забыть передать body"
+
+def on_request(ch, method, props, body):
     base.insert(body)
     response = base.outg(n)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
-                     properties=pika.BasicProperties(correlation_id = \
+                     properties=pika.BasicProperties(correlation_id=\
                                                      props.correlation_id),
                      body=str(response))
     ch.basic_ack(delivery_tag = method.delivery_tag)

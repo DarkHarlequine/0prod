@@ -2,6 +2,7 @@ import random
 import pika
 import uuid
 
+
 class Client(object):
     def __init__(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -18,27 +19,29 @@ class Client(object):
     def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
             self.response = body
-    def job (self):
-        key = random.randint(1,5)
+
+    def job(self):
+        key = random.randint(1, 5)
         if key == 1:
-         self.task ="Play a game"
+            self.task = "Play a game"
         elif key == 2:
-         self.task ="Play guitar"
+            self.task = "Play guitar"
         elif key == 3:
-         self.task ="Kill all humans"
+            self.task = "Kill all humans"
         elif key == 4:
-         self.task = "Conquer this world"
-        elif key ==5:
-         self.task = "Drink a bottle"
+            self.task = "Conquer this world"
+        elif key == 5:
+            self.task = "Drink a bottle"
         return (self.task)
+
     def call(self, job):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(exchange='',
                                    routing_key='rpc_queue',
                                    properties=pika.BasicProperties(
-                                         reply_to = self.callback_queue,
-                                         correlation_id = self.corr_id,
+                                         reply_to=self.callback_queue,
+                                         correlation_id=self.corr_id,
                                          ),
                                    body=job)
         while self.response is None:
