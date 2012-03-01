@@ -1,7 +1,8 @@
 import MySQLdb as mdb
 import sys
 import server
-con = mdb.connect('localhost', 'user0', 'test623', '0_prod');
+import connection as xk
+con = mdb.connect(read_default_file='./.conf.cnf');
 
 
 def insert(msg):
