@@ -49,7 +49,7 @@ class Client(object):
         return int(self.response)
 
 rpc = Client()
-
+work = rpc.job()
 print " [x] Requesting number"
-response = rpc.call()
+response = rpc.call(work)
 print " [.] Task number is %s" % (response,)
