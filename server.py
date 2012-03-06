@@ -1,5 +1,5 @@
+import pika 
 import base
-import pika
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost'))
@@ -10,7 +10,7 @@ channel.queue_declare(queue='rpc_queue')
 
 
 def on_request(ch, method, props, body):
-    base.insert(body)
+    #base.insert(body)
     response = base.outg(n)
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,

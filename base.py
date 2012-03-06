@@ -9,9 +9,9 @@ def insert(msg):
     with con:
         cur = con.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS\
-                     Jobs(Id INT PRIMARY KEY AUTO_INCREMENT,
-                          Task VARCHAR(25),
-                          Time TIMESTAMP)")
+                     Jobs(Id INT PRIMARY KEY AUTO_INCREMENT,\
+                     Task VARCHAR(25),\
+                     Time TIMESTAMP)")
         cur.execute("INSERT INTO Jobs(Task) VALUES(msg)")
 
 
