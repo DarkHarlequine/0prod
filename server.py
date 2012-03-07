@@ -1,9 +1,23 @@
 import pika
-import _mysql as mdb
+import MySQLdb as mdb
 import sys
 
 
-xk = mdb.connect(read_default_file='conf.cnf');
+def cut (x):
+    x = x.strip("\n")
+    return(x)
+
+
+f = open ('conf.cnf')
+a = f.readline()
+b = f.readline()
+c = f.readline()
+d = f.readline()
+a = cut(a)
+b = cut(b)
+c = cut(c)
+d = cut(d)
+xk = mdb.connect(a, b, c, d)
 
 
 def insert(msg):

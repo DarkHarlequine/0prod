@@ -1,4 +1,4 @@
---host = localhost
---user = user0
---password = test623
---database = 0_prod
+localhost
+user0
+000
+0_prod
