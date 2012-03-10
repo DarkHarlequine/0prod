@@ -27,7 +27,7 @@ def insert(msg):
                      Jobs(Id INT PRIMARY KEY AUTO_INCREMENT,\
                      Task VARCHAR(25),\
                      Time TIMESTAMP)")
-        cur.execute("INSERT INTO Jobs(Task) VALUES(msg)")
+        cur.execute("INSERT INTO Jobs(Id, Task, Time) VALUES(%s,msg,%s)")
 
 
 def outg():
