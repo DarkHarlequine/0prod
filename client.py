@@ -49,7 +49,12 @@ class Client(object):
         return int(self.response)
 
 rpc = Client()
-work = rpc.job()
-print " [x] Requesting number"
-response = rpc.call(work)
-print " [.] Task number is %s" % (response,)
+print "If you want to start session press 1, if you don't press 0"
+key = int(raw_input())
+while key is not 0:
+    print "If you want to give a task press 1, if you don't press 0"
+    key = int(raw_input())
+    work = rpc.job()
+    print " [x] Requesting number"
+    response = rpc.call(work)
+    print " [.] Task number is %s" % (response,)

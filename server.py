@@ -61,5 +61,8 @@ def on_request(ch, method, props, body):
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(on_request, queue='rpc_queue')
-print " [x] Waiting for task"
-channel.start_consuming()
+print " Server ready. If you want to stop server please press Ctrl+C"
+try:
+    channel.start_consuming()
+except:
+    connection.close()
