@@ -1,4 +1,8 @@
-localhost
-user0
-000
-0_prod
+[MySQLopts]
+host = localhost
+user = user0
+passwd = 000
+base = 0_prod
+
+[Rabbitopts]
+host = localhost

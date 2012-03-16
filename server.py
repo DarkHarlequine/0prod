@@ -1,6 +1,17 @@
+import ConfigParser
 import pika
 import MySQLdb as mdb
 import sys
+
+
+config = ConfigParser.RawConfigParser()
+config.read('conf.cnf')
+defmhost = config.get ("MySQLopts","host")
+defuser = config.get ("MySQLopts","user")
+defpasswd = config.get ("MySQLopts","passwd")
+defbase = config.get ("MySQLopts","base")
+defrhost = config.get ("Rabbitopts","host")
+konnekt = mdb.connect(defmhost, defuser, defpasswd, defbase)
 
 
 def cut (x):
@@ -8,22 +19,10 @@ def cut (x):
     return(x)
 
 
-f = open ('conf.cnf')
-a = f.readline()
-b = f.readline()
-c = f.readline()
-d = f.readline()
-a = cut(a)
-b = cut(b)
-c = cut(c)
-d = cut(d)
-xk = mdb.connect(a, b, c, d)
-
-
 def insert(msg):
     t = str(msg)
-    with xk:
-        cur = xk.cursor()
+    with konnekt:
+        cur = konnekt.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS\
                      Jobs(Id INT PRIMARY KEY AUTO_INCREMENT,\
                      Task VARCHAR(25),\
@@ -33,8 +32,8 @@ def insert(msg):
 
 
 def outg():
-    with xk:
-        cur = xk.cursor()
+    with konnekt:
+        cur = konnekt.cursor()
         cur.execute("SELECT Id FROM Jobs")
         res = cur.fetchall()
         ki = str(res[-1])
@@ -42,7 +41,7 @@ def outg():
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=a))
+        host=defrhost))
 
 channel = connection.channel()
 
