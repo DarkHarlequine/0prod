@@ -6,3 +6,8 @@ base = 0_prod
 
 [Rabbitopts]
 host = localhost
+
+[CRopts]
+user = root
+passwd = 111
+host = localhost

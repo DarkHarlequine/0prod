@@ -36,8 +36,8 @@ def outg():
         cur = konnekt.cursor()
         cur.execute("SELECT Id FROM Jobs")
         res = cur.fetchall()
-        ki = str(res[-1])
-    return (ki)
+        key = str(res[-1])
+    return (key)
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
