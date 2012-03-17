@@ -13,13 +13,9 @@ rpasswd = config.get("CRopts", "passwd")
 rhost = config.get("CRopts", "host")
 konnekt = mdb.connect(rhost, ruser, rpasswd)
 with konnekt:
-    cur0 = konnekt.cursor()
-    cur0.execute("CREATE DATABASE IF NOT EXISTS %s;\
-                 CREATE USER '%s'@'%s' IDENTIFIED BY '%s';" % \
-                 (defbase, defuser, defhost, defpasswd))
-    cur0.close()
-    cur1 = konnekt.cursor()
-    cur1.execute("USE %s;\
-                 GRANT ALL ON %s.* TO '%s'@'%s';" % \
-                 (defbase, defbase, defuser, defhost))
-    cur1.close()
+    cur = konnekt.cursor()
+    cur.execute("CREATE DATABASE IF NOT EXISTS %s;" % \
+               (defbase))
+    cur.execute("GRANT ALL ON %s.* TO '%s'@'%s' IDENTIFIED BY '%s';" % \
+               (defbase, defuser, defhost, defpasswd))
+    cur.close()

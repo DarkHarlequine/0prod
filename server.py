@@ -64,4 +64,5 @@ print " Server ready. If you want to stop server please press Ctrl+C"
 try:
     channel.start_consuming()
 except:
+    print " \n Server stopped manually"
     connection.close()

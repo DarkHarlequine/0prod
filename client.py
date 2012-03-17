@@ -60,7 +60,10 @@ key = int(raw_input())
 while key is not 0:
     print "If you want to give a task press 1, if you don't press 0"
     key = int(raw_input())
-    work = rpc.job()
-    print " [x] Requesting number"
-    response = rpc.call(work)
-    print " [.] Task number is %s" % (response,)
+    if (key == 1):
+        work = rpc.job()
+        print " [x] Requesting number"
+        response = rpc.call(work)
+        print " [.] Task number is %s" % (response,)
+    else:
+        print "Session close manually"
