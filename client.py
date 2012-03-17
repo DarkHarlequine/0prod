@@ -6,7 +6,7 @@ import uuid
 
 config = ConfigParser.RawConfigParser()
 config.read('conf.cnf')
-defrhost = config.get ("Rabbitopts","host")
+defrhost = config.get("Rabbitopts", "host")
 
 
 class Client(object):

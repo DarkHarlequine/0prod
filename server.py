@@ -6,15 +6,15 @@ import sys
 
 config = ConfigParser.RawConfigParser()
 config.read('conf.cnf')
-defmhost = config.get ("MySQLopts","host")
-defuser = config.get ("MySQLopts","user")
-defpasswd = config.get ("MySQLopts","passwd")
-defbase = config.get ("MySQLopts","base")
-defrhost = config.get ("Rabbitopts","host")
+defmhost = config.get("MySQLopts", "host")
+defuser = config.get("MySQLopts", "user")
+defpasswd = config.get("MySQLopts", "passwd")
+defbase = config.get("MySQLopts", "base")
+defrhost = config.get("Rabbitopts", "host")
 konnekt = mdb.connect(defmhost, defuser, defpasswd, defbase)
 
 
-def cut (x):
+def cut(x):
     x = x.strip("\n()L,")
     return(x)
 
@@ -55,11 +55,11 @@ def on_request(ch, method, props, body):
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(correlation_id=\
                                                      props.correlation_id),
-                     body=str(response))
+                     body = str(response))
     ch.basic_ack(delivery_tag = method.delivery_tag)
 
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume(on_request, queue='rpc_queue')
+channel.basic_qos(prefetch_count = 1)
+channel.basic_consume(on_request, queue = 'rpc_queue')
 print " Server ready. If you want to stop server please press Ctrl+C"
 try:
     channel.start_consuming()
