@@ -1,0 +1,14 @@
+How to use client-server app + mysql database.
+
+1. Scripts
+
+createbase.py - run this script to create MySql database and user which will have all privileges on this db.
+server.py - run this script to start server.
+client.py - run this script to start client.
+
+All default settings are stored in config file.
+
+2. Config file
+
+Config file conf.cnf is used to create MySQL db, to create connection to MySQL db and RabbitMQ server. Section "MySQLopts" contains default host, username, pass
+word and base name to MySQL.It's used while server.py is started. Section "Rabbtopts" contains host on which RabbitMQ messaging server is started. Section "CRopts" contains MySQL root username, password and host. It's used than your run createbase.py
