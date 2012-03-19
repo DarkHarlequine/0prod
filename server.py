@@ -1,7 +1,7 @@
-import ConfigParser
-import pika
-import MySQLdb as mdb
 import sys
+import pika
+import ConfigParser
+import MySQLdb as mdb
 
 
 config = ConfigParser.RawConfigParser()
@@ -53,13 +53,13 @@ def on_request(ch, method, props, body):
     response = cut(outg())
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
-                     properties=pika.BasicProperties(correlation_id=\
-                                                     props.correlation_id),
-                     body = str(response))
-    ch.basic_ack(delivery_tag = method.delivery_tag)
+                     properties=pika.BasicProperties(
+                        correlation_id=props.correlation_id),
+                     body=str(response))
+    ch.basic_ack(delivery_tag=method.delivery_tag)
 
-channel.basic_qos(prefetch_count = 1)
-channel.basic_consume(on_request, queue = 'rpc_queue')
+channel.basic_qos(prefetch_count=1)
+channel.basic_consume(on_request, queue='rpc_queue')
 print " Server ready. If you want to stop server please press Ctrl+C"
 try:
     channel.start_consuming()

@@ -1,8 +1,7 @@
-import ConfigParser
 import random
-import pika
 import uuid
-
+import pika
+import ConfigParser
 
 config = ConfigParser.RawConfigParser()
 config.read('conf.cnf')
