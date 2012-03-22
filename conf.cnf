@@ -1,4 +1,13 @@
+[MySQLopts]
 host = localhost
 user = user0
-passwod = itest623
-database = 0_prod
+passwd = 000
+base = 0_prod
+
+[Rabbitopts]
+host = localhost
+
+[CRopts]
+user = root
+passwd = 111
+host = localhost
