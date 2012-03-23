@@ -78,13 +78,13 @@ while key != 0:
     if key == 1:
         work = rpc.job()
         print " [x] Requesting number"
-        response = rpc.call(work,tag)
+        response = rpc.call(work, tag)
         print " [.] Task number is %s" % (response,)
     if key == 2:
         print "Print number of task"
         number = int(raw_input())
         print " [x] Requesting status"
-        response = rpc.call(number,tag)
+        response = rpc.call(number, tag)
         print " [.] Task status is %s" % (response,)
 else:
         print "Session close manually"

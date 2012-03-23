@@ -48,7 +48,7 @@ def outn(number):
         cur = konnekt.cursor()
         cur.execute("SELECT Task FROM Jobs")
         res = cur.fetchall()
-        key = str(res[num-1])
+        key = str(res[num - 1])
     return (key)
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
@@ -62,7 +62,7 @@ channel.queue_declare(queue='rpc_queue')
 def on_request(ch, method, props, body):
     key = body[2]
     newmsg = cut(body)
-    response = '' 
+    response = ''
     if  key == 'Z':
         insert(newmsg)
         response += cut(outg())
