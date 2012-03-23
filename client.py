@@ -71,7 +71,7 @@ print "If you want to start session press 1, if you don't press 0"
 key = int(raw_input())
 while key != 0:
     print "1. If you want to give a task press 1,\
-           \n2. If you want to know task number press 2,\
+           \n2. If you want to know task status press 2,\
            \n3. If you don't press 0"
     key = int(raw_input())
     tag = marker(key)

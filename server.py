@@ -21,8 +21,8 @@ def cut(x):
 
 
 def insert(msg):
-    t = str(msg)
-    t = cut(t)
+    t = msg.lstrip(" '")
+    t = t.rstrip()
     with konnekt:
         cur = konnekt.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS\
@@ -62,7 +62,7 @@ channel.queue_declare(queue='rpc_queue')
 def on_request(ch, method, props, body):
     key = body[2]
     newmsg = cut(body)
-    response = newmsg 
+    response = '' 
     if  key == 'Z':
         insert(newmsg)
         response += cut(outg())
