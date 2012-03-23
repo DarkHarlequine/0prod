@@ -1,4 +1,5 @@
 import sys
+import string
 import pika
 import ConfigParser
 import MySQLdb as mdb
@@ -15,12 +16,13 @@ konnekt = mdb.connect(defmhost, defuser, defpasswd, defbase)
 
 
 def cut(x):
-    x = x.strip("\n()L,")
+    x = x.strip("\n()L,ZY'")
     return(x)
 
 
 def insert(msg):
     t = str(msg)
+    t = cut(t)
     with konnekt:
         cur = konnekt.cursor()
         cur.execute("CREATE TABLE IF NOT EXISTS\
@@ -40,6 +42,15 @@ def outg():
     return (key)
 
 
+def outn(number):
+    num = int(number)
+    with konnekt:
+        cur = konnekt.cursor()
+        cur.execute("SELECT Task FROM Jobs")
+        res = cur.fetchall()
+        key = str(res[num-1])
+    return (key)
+
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host=defrhost))
 
@@ -49,8 +60,14 @@ channel.queue_declare(queue='rpc_queue')
 
 
 def on_request(ch, method, props, body):
-    insert(body)
-    response = cut(outg())
+    key = body[2]
+    newmsg = cut(body)
+    response = newmsg 
+    if  key == 'Z':
+        insert(newmsg)
+        response += cut(outg())
+    elif key == 'Y':
+        response += cut(outn(newmsg))
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(

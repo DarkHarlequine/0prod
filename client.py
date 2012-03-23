@@ -53,19 +53,16 @@ class Client(object):
                                    body=code)
         while self.response is None:
             self.connection.process_data_events()
-        if mark == 1:
-            return int(self.response)
-        elif mark == 2:
-            return str(self.response)
+        return str(self.response)
 
 
 def marker(mark):
     s = None
     if mark == 1:
-        s = 'number'
+        s = 'Z'
         return (s)
     if mark == 2:
-        s = 'status'
+        s = 'Y'
         return (s)
 
 
@@ -84,9 +81,10 @@ while key != 0:
         response = rpc.call(work,tag)
         print " [.] Task number is %s" % (response,)
     if key == 2:
-        work = rpc.job()
+        print "Print number of task"
+        number = int(raw_input())
         print " [x] Requesting status"
-        response = rpc.call(work,tag)
+        response = rpc.call(number,tag)
         print " [.] Task status is %s" % (response,)
 else:
         print "Session close manually"
