@@ -39,7 +39,9 @@ class Client(object):
             self.task = "Drink a bottle"
         return (self.task)
 
-    def call(self, job):
+    def call(self, job, mark):
+        tcode = (mark, job)
+        code = str(tcode)
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(exchange='',
@@ -48,21 +50,43 @@ class Client(object):
                                          reply_to=self.callback_queue,
                                          correlation_id=self.corr_id,
                                          ),
-                                   body=job)
+                                   body=code)
         while self.response is None:
             self.connection.process_data_events()
-        return int(self.response)
+        if mark == 1:
+            return int(self.response)
+        elif mark == 2:
+            return str(self.response)
+
+
+def marker(mark):
+    s = None
+    if mark == 1:
+        s = 'number'
+        return (s)
+    if mark == 2:
+        s = 'status'
+        return (s)
+
 
 rpc = Client()
 print "If you want to start session press 1, if you don't press 0"
 key = int(raw_input())
-while key is not 0:
-    print "If you want to give a task press 1, if you don't press 0"
+while key != 0:
+    print "1. If you want to give a task press 1,\
+           \n2. If you want to know task number press 2,\
+           \n3. If you don't press 0"
     key = int(raw_input())
-    if (key == 1):
+    tag = marker(key)
+    if key == 1:
         work = rpc.job()
         print " [x] Requesting number"
-        response = rpc.call(work)
+        response = rpc.call(work,tag)
         print " [.] Task number is %s" % (response,)
-    else:
+    if key == 2:
+        work = rpc.job()
+        print " [x] Requesting status"
+        response = rpc.call(work,tag)
+        print " [.] Task status is %s" % (response,)
+else:
         print "Session close manually"
