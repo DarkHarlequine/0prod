@@ -1,4 +1,3 @@
-
 from distutils.core import setup
 
 setup(name='0_prod',
@@ -7,5 +6,5 @@ setup(name='0_prod',
       author='Nikolaj Starodubtsev',
       author_email='starodubcevna@gmail.com',
       py_modules=['server', 'client', 'createbase'],
-      data_files=[('conf',['conf.cnf'])]
+      data_files=['conf.cnf', 'Readme']
      )
