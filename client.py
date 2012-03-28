@@ -1,17 +1,14 @@
 import random
 import uuid
 import pika
-import ConfigParser
+import setconnect as sc
 
-config = ConfigParser.RawConfigParser()
-config.read('conf.cnf')
-defrhost = config.get("Rabbitopts", "host")
-
+con0 = sc.Connect()
 
 class Client(object):
     def __init__(self):
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
-                host=defrhost))
+                host=con0.rhost))
 
         self.channel = self.connection.channel()
 
