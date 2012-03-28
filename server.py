@@ -3,16 +3,11 @@ import string
 import pika
 import ConfigParser
 import MySQLdb as mdb
+import setconnect as sc
 
 
-config = ConfigParser.RawConfigParser()
-config.read('conf.cnf')
-defmhost = config.get("MySQLopts", "host")
-defuser = config.get("MySQLopts", "user")
-defpasswd = config.get("MySQLopts", "passwd")
-defbase = config.get("MySQLopts", "base")
-defrhost = config.get("Rabbitopts", "host")
-konnekt = mdb.connect(defmhost, defuser, defpasswd, defbase)
+con0 = sc.Connect()
+konnekt = mdb.connect(con0.mhost, con0.user, con0.passwd, con0.base)
 
 
 def cut(x):
@@ -52,7 +47,7 @@ def outn(number):
     return (key)
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=defrhost))
+        host=con0.rhost))
 
 channel = connection.channel()
 
