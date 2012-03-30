@@ -4,7 +4,7 @@ import ConfigParser
 class Connect(object):
     def __init__(self):
         config = ConfigParser.RawConfigParser()
-        config.read('conf.cnf')
+        config.read('./etc/conf.cnf')
         self.mhost = config.get("MySQLopts", "host")
         self.user = config.get("MySQLopts", "user")
         self.passwd = config.get("MySQLopts", "passwd")
