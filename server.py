@@ -6,10 +6,6 @@ import MySQLdb as mdb
 import setconnect as sc
 
 
-con0 = sc.Connect()
-konnekt = mdb.connect(con0.mhost, con0.user, con0.passwd, con0.base)
-
-
 def cut(x):
     x = x.strip("\n()L,ZY'")
     return(x)
@@ -46,13 +42,6 @@ def outn(number):
         key = str(res[num - 1])
     return (key)
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host=con0.rhost))
-
-channel = connection.channel()
-
-channel.queue_declare(queue='rpc_queue')
-
 
 def on_request(ch, method, props, body):
     key = body[2]
@@ -70,11 +59,21 @@ def on_request(ch, method, props, body):
                      body=str(response))
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume(on_request, queue='rpc_queue')
-print " Server ready. If you want to stop server please press Ctrl+C"
-try:
-    channel.start_consuming()
-except:
-    print " \n Server stopped manually"
-    connection.close()
+if __name__ == "__main__":
+    con0 = sc.Connect()
+    konnekt = mdb.connect(con0.mhost, con0.user, con0.passwd, con0.base)
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+            host=con0.rhost))
+
+    channel = connection.channel()
+
+    channel.queue_declare(queue='rpc_queue')
+
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(on_request, queue='rpc_queue')
+    print " Server ready. If you want to stop server please press Ctrl+C"
+    try:
+        channel.start_consuming()
+    except:
+        print " \n Server stopped manually"
+        connection.close()

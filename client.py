@@ -3,7 +3,6 @@ import uuid
 import pika
 import setconnect as sc
 
-con0 = sc.Connect()
 
 class Client(object):
     def __init__(self):
@@ -58,30 +57,31 @@ def marker(mark):
     if mark == 1:
         s = 'Z'
         return (s)
-    if mark == 2:
+    elif mark == 2:
         s = 'Y'
         return (s)
 
-
-rpc = Client()
-print "If you want to start session press 1, if you don't press 0"
-key = int(raw_input())
-while key != 0:
-    print "1. If you want to give a task press 1,\
-           \n2. If you want to know task status press 2,\
-           \n3. If you don't press 0"
+if __name__ == "__main__":
+    con0 = sc.Connect()
+    rpc = Client()
+    print "If you want to start session press 1, if you don't press 0"
     key = int(raw_input())
-    tag = marker(key)
-    if key == 1:
-        work = rpc.job()
-        print " [x] Requesting number"
-        response = rpc.call(work, tag)
-        print " [.] Task number is %s" % (response,)
-    if key == 2:
-        print "Print number of task"
-        number = int(raw_input())
-        print " [x] Requesting status"
-        response = rpc.call(number, tag)
-        print " [.] Task status is %s" % (response,)
-else:
-        print "Session close manually"
+    while key != 0:
+        print "1. If you want to give a task press 1,\
+               \n2. If you want to know task status press 2,\
+               \n3. If you don't press 0"
+        key = int(raw_input())
+        tag = marker(key)
+        if key == 1:
+            work = rpc.job()
+            print " [x] Requesting number"
+            response = rpc.call(work, tag)
+            print " [.] Task number is %s" % (response,)
+        if key == 2:
+            print "Print number of task"
+            number = int(raw_input())
+            print " [x] Requesting status"
+            response = rpc.call(number, tag)
+            print " [.] Task status is %s" % (response,)
+    else:
+            print "Session close manually"
