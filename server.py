@@ -1,7 +1,5 @@
 import sys
-import string
 import pika
-import ConfigParser
 import MySQLdb as mdb
 import setconnect as sc
 
