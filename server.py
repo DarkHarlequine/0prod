@@ -1,19 +1,16 @@
-import sys
-import string
 import pika
-import ConfigParser
 import MySQLdb as mdb
 import setconnect as sc
 
 
 def cut(x):
-    """Pretty function which help us to format string as we like"""
+    """Format string. Delete """
     x = x.strip("\n()L,ZY'")
     return(x)
 
 
 def insert(msg):
-    """Function put new task to MySQL db"""
+    """Put new task to MySQL db"""
     t = msg.lstrip(" '")
     t = t.rstrip()
     with konnekt:
@@ -26,8 +23,8 @@ def insert(msg):
                       (t))
 
 
-def outg():
-    """Fucntion return id of last task added to MySQL db"""
+def last_added_id_request():
+    """Return id of last task added to MySQL db"""
     with konnekt:
         cur = konnekt.cursor()
         cur.execute("SELECT Id FROM Jobs")
@@ -36,8 +33,8 @@ def outg():
     return (key)
 
 
-def outn(number):
-    """Function return task type by number from MySQL db"""
+def task_stat_request(number):
+    """Return task type by number from MySQL db"""
     num = int(number)
     with konnekt:
         cur = konnekt.cursor()
@@ -48,15 +45,15 @@ def outn(number):
 
 
 def on_request(ch, method, props, body):
-    """Function handle incoming message from RabbitMQ server"""
+    """Handle incoming message from RabbitMQ server"""
     key = body[2]
     newmsg = cut(body)
     response = ''
     if  key == 'Z':
         insert(newmsg)
-        response += cut(outg())
+        response += cut(last_added_id_request())
     elif key == 'Y':
-        response += cut(outn(newmsg))
+        response += cut(task_stat_request(newmsg))
     ch.basic_publish(exchange='',
                      routing_key=props.reply_to,
                      properties=pika.BasicProperties(

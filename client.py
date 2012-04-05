@@ -5,9 +5,9 @@ import setconnect as sc
 
 
 class Client(object):
-    """Class descripes client functions"""
+    """Descripes client functions"""
     def __init__(self):
-        """Init function which make connect to RabbitMQ server using pika"""
+        """Make connect to RabbitMQ server using pika"""
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
                 host=con0.rhost))
 
@@ -25,7 +25,7 @@ class Client(object):
             self.response = body
 
     def job(self):
-        """Function generate task using random int values"""
+        """Generate task using random int values"""
         key = random.randint(1, 5)
         if key == 1:
             self.task = "Play a game"
@@ -40,7 +40,7 @@ class Client(object):
         return (self.task)
 
     def call(self, job, mark):
-        """Function send message to RabbitMQ. Message contains string 'marker, task/tasknumber'"""
+        """Send message to RabbitMQ. Message contains string 'marker, task/tasknumber'"""
         tcode = (mark, job)
         code = str(tcode)
         self.response = None
@@ -58,7 +58,7 @@ class Client(object):
 
 
 def marker(mark):
-    """Function which return mark for server. Z - if we want to give new task,
+    """Return mark for server. Z - if we want to give new task,
        Y - if we want to view task by number"""
     s = None
     if mark == 1:
