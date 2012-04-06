@@ -1,4 +1,3 @@
-import sys
 import pika
 import MySQLdb as mdb
 import setconnect as sc

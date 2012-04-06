@@ -1,5 +1,5 @@
-import sys
 import ConfigParser
+
 
 class Connect(object):
     """Create connect object"""

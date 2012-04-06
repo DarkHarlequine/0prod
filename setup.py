@@ -7,7 +7,11 @@ class Pep8(Command):
     def finalize_options(self):
         pass
     def run(self):
-        module = raw_input ("Please insert module name\n")       
+        module ='./0_prod/'+raw_input ("Please insert module name.\n\
+                                        client.py\n\
+                                        server.py\n\
+                                        setconnect.py\n\
+                                        createbase.py\n")
         rez = commands.getstatusoutput('pep8 %s' % (module))
         if rez == (0, ''):
             rez = 'No errors'
@@ -19,7 +23,11 @@ class Pyflakes(Command):
     def finalize_options(self):
         pass
     def run(self):
-        module = raw_input ("Please insert module name\n")       
+        module ='./0_prod/'+raw_input ("Please insert module name.\n\
+                                        client.py\n\
+                                        server.py\n\
+                                        setconnect.py\n\
+                                        createbase.py\n")
         rez = commands.getstatusoutput('pyflakes %s' % (module))
         if rez == (0, ''):
             rez = 'No errors'
@@ -32,7 +40,7 @@ setup(name='0_prod',
       author='Nikolaj Starodubtsev',
       author_email='starodubcevna@gmail.com',
       packages=['0_prod'],
-     # package_dir={'':'bin'},
+     # package_dir={'0_prod':'./0_prod'},
       data_files=['Readme'],
       package_data={'0_prod': ['./etc/conf.cnf']},
       scripts=['setconnect.py'],

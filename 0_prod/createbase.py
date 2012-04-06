@@ -1,5 +1,4 @@
 import ConfigParser
-import sys
 import MySQLdb as mdb
 
 config = ConfigParser.RawConfigParser()
