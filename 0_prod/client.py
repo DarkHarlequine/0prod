@@ -40,7 +40,8 @@ class Client(object):
         return (self.task)
 
     def call(self, job, mark):
-        """Send message to RabbitMQ. Message contains string 'marker, task/tasknumber'"""
+        """Send message to RabbitMQ. Message contains string 'marker,task/\
+        tasknumber'"""
         tcode = (mark, job)
         code = str(tcode)
         self.response = None
