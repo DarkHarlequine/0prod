@@ -5,10 +5,12 @@ sys.path.append ("../0_prod")
 import server
 
 
+
 class ServerTest(unittest.TestCase):
     def setUp(self):
         self.msg = "Test message"
-        self.konnekt = Mock()
+        self.mockCursor = Mock({'execute': Mock(), 'fetchall':Mock()})
+        konnekt = Mock( { "cursor" : self.mockCursor, "__enter__": None, "__exit__": None } )
 
 
     def testCut(self):
@@ -19,20 +21,20 @@ class ServerTest(unittest.TestCase):
 
     def testInsert(self):
         server.insert(self.msg)
-        konnekt.mock_calls
+        self.konnekt.mock_calls
 
 
     def testLastIdRequest(self):
         server.last_added_id_request()
-        konnekt.mock_calls
+        self.konnekt.mock_calls
 
 
     def testTaskStatRequest(self):
         server.task_stat_request(1)
-        konnekt.mock_calls
+        self.konnekt.mock_calls
 
 
 if __name__ == '__main__':
-    mockCursor = Mock({'execute': Mock(), 'fetchall':Mock()})
-    server.konnekt = Mock( { "cursor" : mockCursor } )
+    #mockCursor = Mock({'execute': Mock(), 'fetchall':Mock()})
+    #server.konnekt = Mock( { "cursor" : mockCursor, "__enter__": None, "__exit__": None } )
     unittest.main()
