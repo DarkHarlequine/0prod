@@ -9,8 +9,12 @@ import server
 class ServerTest(unittest.TestCase):
     def setUp(self):
         self.msg = "Test message"
-        self.mockCursor = Mock({'execute': Mock(), 'fetchall':Mock()})
-        konnekt = Mock( { "cursor" : self.mockCursor, "__enter__": None, "__exit__": None } )
+        self.mockCursor = Mock({'execute': Mock(return_value = True),\
+                                'fetchall':Mock(return_value = True)})
+        server.konnekt = Mock( {'cursor' : self.mockCursor,\
+                                '__enter__': Mock(return_value = 'Hell, yeah'),\
+                                '__exit__': Mock(return_valuer = False) } )
+        #self.konnekt = server.konnekt
 
 
     def testCut(self):
@@ -20,6 +24,9 @@ class ServerTest(unittest.TestCase):
 
 
     def testInsert(self):
+        server.konnekt = Mock( {'cursor' : self.mockCursor,\
+                                '__enter__': Mock(return_value = 'Hell, yeah'),\
+                                '__exit__': Mock(return_valuer = False) } )
         server.insert(self.msg)
         self.konnekt.mock_calls
 

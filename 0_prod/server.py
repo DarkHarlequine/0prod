@@ -1,8 +1,8 @@
 import pika
 import MySQLdb as mdb
 import setconnect as sc
-con0 = sc.Connect()
-konnekt = mdb.connect(con0.mhost, con0.user, con0.passwd, con0.base)
+#con0 = sc.Connect()
+#konnekt = mdb.connect(con0.mhost, con0.user, con0.passwd, con0.base)
 
 
 def cut(x):

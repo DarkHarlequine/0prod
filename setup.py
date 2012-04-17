@@ -34,6 +34,19 @@ class Pyflakes(Command):
         raise SystemExit(rez)
 
 
+class Tests(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        rez = commands.getstatusoutput('pyflakes %s' % (module))
+        if rez == (0, ''):
+            rez = 'No errors'
+        raise SystemExit(rez)
+
+
 setup(name='0_prod',
       version='0.9',
       description='Client server app worked thru RabbitMQ server',
