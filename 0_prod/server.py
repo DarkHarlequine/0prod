@@ -58,22 +58,22 @@ class Server(object):
         return (key)
 
 
-    def on_request(ch, method, props, body):
+    def on_request(self, ch, method, props, body):
         """Handle incoming message from RabbitMQ server"""
         key = body[2]
-        newmsg = cut(body)
-        response = ''
+        newmsg = self.cut(body)
+        self.response = ''
         if  key == 'Z':
-            insert(newmsg)
-            response += cut(last_added_id_request())
+            self.insert(newmsg)
+            self.response += self.cut(self.last_added_id_request())
         elif key == 'Y':
-            response += cut(task_stat_request(newmsg))
-        ch.basic_publish(exchange='',
+            self.response += self.cut(self.task_stat_request(newmsg))
+        self.channel.basic_publish(exchange='',
                          routing_key=props.reply_to,
                          properties=pika.BasicProperties(
                             correlation_id=props.correlation_id),
-                         body=str(response))
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+                         body=str(self.response))
+        self.channel.basic_ack(delivery_tag=method.delivery_tag)
 
 if __name__ == "__main__":
     server = Server()
