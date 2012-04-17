@@ -5,7 +5,7 @@ import setconnect as sc
 
 
 class Client(object):
-    """Descripes client functions"""
+    """Describes client functions"""
     def __init__(self):
         """Make connect to RabbitMQ server using pika"""
         self.connection = pika.BlockingConnection(pika.ConnectionParameters(
