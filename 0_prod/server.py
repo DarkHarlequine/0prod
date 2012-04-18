@@ -48,7 +48,7 @@ class Server(object):
         return (key)
 
 
-    def task_stat_request(number):
+    def task_stat_request(self, number):
         """Return task type by number from MySQL db"""
         num = int(number)
         cur = self.konnekt.cursor()
