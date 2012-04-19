@@ -1,5 +1,7 @@
 from distutils.core import setup, Command
 import commands
+import sys
+import subprocess
 class Pep8(Command):
     user_options = []
     def initialize_options(self):
@@ -41,9 +43,20 @@ class Tests(Command):
     def finalize_options(self):
         pass
     def run(self):
-        rez = commands.getstatusoutput('pyflakes %s' % (module))
-        if rez == (0, ''):
-            rez = 'No errors'
+        rez = subprocess.call([sys.executable,\
+                              'tests/stest.py'])
+        raise SystemExit(rez)
+
+
+class Testc(Command):
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        rez = subprocess.call([sys.executable,\
+                              'tests/ctest.py'])
         raise SystemExit(rez)
 
 
@@ -58,5 +71,7 @@ setup(name='0_prod',
       package_data={'0_prod': ['./etc/conf.cnf']},
       scripts=['setconnect.py'],
       cmdclass={'pep8':Pep8,
-                'pyflakes':Pyflakes}
+                'pyflakes':Pyflakes,
+                'stest':Tests,
+                'ctest':Testc}
      )

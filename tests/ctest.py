@@ -1,5 +1,5 @@
 import sys
-sys.path.append ("../0_prod")
+sys.path.append ("../0_prod/0_prod")
 import client
 import unittest
 from mock import Mock

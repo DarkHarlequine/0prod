@@ -1,7 +1,7 @@
 import sys
 import unittest
 from mock import Mock
-sys.path.append ("../0_prod")
+sys.path.append ("../0_prod/0_prod")
 from server import Server
 
 
