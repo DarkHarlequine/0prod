@@ -2,46 +2,35 @@ import sys
 import unittest
 from mock import Mock
 sys.path.append ("../0_prod")
-import server
+from server import Server
 
 
 
 class ServerTest(unittest.TestCase):
     def setUp(self):
+        self.tstobj = Mock(spec = Server)
         self.msg = "Test message"
-        self.mockCursor = Mock({'execute': Mock(return_value = True),\
-                                'fetchall':Mock(return_value = True)})
-        server.konnekt = Mock( {'cursor' : self.mockCursor,\
-                                '__enter__': Mock(return_value = 'Hell, yeah'),\
-                                '__exit__': Mock(return_valuer = False) } )
-        #self.konnekt = server.konnekt
 
 
     def testCut(self):
         incorrect_msg = "\n(LTest message,'ZY)"
-        correct_msg = server.cut(incorrect_msg)
-        self.assertEqual(self.msg, correct_msg)
-
+        self.tstobj.cut(incorrect_msg)
+        print self.tstobj.cut.mock_calls
 
     def testInsert(self):
-        server.konnekt = Mock( {'cursor' : self.mockCursor,\
-                                '__enter__': Mock(return_value = 'Hell, yeah'),\
-                                '__exit__': Mock(return_valuer = False) } )
-        server.insert(self.msg)
-        self.konnekt.mock_calls
+        self.tstobj.insert(self.msg)
+        print self.tstobj.insert.mock_calls
 
 
     def testLastIdRequest(self):
-        server.last_added_id_request()
-        self.konnekt.mock_calls
+        self.tstobj.last_added_id_request()
+        print self.tstobj.last_added_id_request.mock_calls
 
 
     def testTaskStatRequest(self):
-        server.task_stat_request(1)
-        self.konnekt.mock_calls
+        self.tstobj.task_stat_request(1)
+        print self.tstobj.task_stat_request.mock_calls
 
 
 if __name__ == '__main__':
-    #mockCursor = Mock({'execute': Mock(), 'fetchall':Mock()})
-    #server.konnekt = Mock( { "cursor" : mockCursor, "__enter__": None, "__exit__": None } )
-    unittest.main()
+   unittest.main()
