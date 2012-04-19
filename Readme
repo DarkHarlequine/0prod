@@ -12,3 +12,7 @@ All default settings are stored in config file.
 
 Config file conf.cnf is used to create MySQL db, to create connection to MySQL db and RabbitMQ server. Section "MySQLopts" contains default host, username, pass
 word and base name to MySQL.It's used while server.py is started. Section "Rabbtopts" contains host on which RabbitMQ messaging server is started. Section "CRopts" contains MySQL root username, password and host. It's used than your run createbase.py
+
+3. Setup.py
+
+For install this app use setup.py in root directory of app. For run pep8 and pyflakes on app modules type "setup.py pep8" and "setup.py pyflakes". To run unittests use "setup.py ctest" - to see client unittests results and "setup.py stest" - to see server unittest results
