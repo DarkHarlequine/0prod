@@ -25,7 +25,6 @@ class Server(object):
         x = x.strip("\n()L,ZY'")
         return(x)
 
-
     def insert(self, msg):
         """Put new task to MySQL db"""
         t = msg.lstrip(" '")
@@ -38,7 +37,6 @@ class Server(object):
         cur.execute("INSERT INTO Jobs(Task) VALUES('%s')" %\
                      (t))
 
-
     def last_added_id_request(self):
         """Return id of last task added to MySQL db"""
         cur = self.konnekt.cursor()
@@ -46,7 +44,6 @@ class Server(object):
         res = cur.fetchall()
         key = str(res[-1])
         return (key)
-
 
     def task_stat_request(self, number):
         """Return task type by number from MySQL db"""
@@ -56,7 +53,6 @@ class Server(object):
         res = cur.fetchall()
         key = str(res[num - 1])
         return (key)
-
 
     def on_request(self, ch, method, props, body):
         """Handle incoming message from RabbitMQ server"""
