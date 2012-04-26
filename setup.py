@@ -2,51 +2,64 @@ from distutils.core import setup, Command
 import commands
 import sys
 import subprocess
+from glob import glob
+
+
+def run_check(command_name):
+    dir1 = glob('./0_prod/*.py')
+    dir2 = glob('./tests/*.py')
+    r_dir = glob('./*.py')
+    dir1.extend(dir2)
+    dir1.extend(r_dir)
+    n = len(dir1)
+    i = 0
+    while i < n:
+        rez1 = commands.getstatusoutput('%(command)s %(type)s' % \
+                                        {"command": command_name,\
+                                         "type": str(dir1[i])})
+        if rez1 == (0, ''):
+            rez1 = 'No errors in %s' % str(dir1[i])
+            print rez1
+        else:
+            print '%s \n' % str(rez1)
+        i = i + 1
+
+
 class Pep8(Command):
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
-        rez1 = commands.getstatusoutput('pep8 ./0_prod/client.py\
-                                         ./0_prod/server.py\
-                                         ./0_prod/createbase.py\
-                                         ./0_prod/setconnect.py\
-                                         ./tests/ctest.py\
-                                         ./tests/stest.py')
-        if rez1 == (0, ''):
-            rez1 = 'No errors'
-            raise SystemExit(rez1)
-        else:
-            rez = str(rez1)
-            #rez = rez.strip('\\n')
-            rez2 = rez.split('\\n./')
-            raise SystemExit(rez2)
+        run_check('pep8')
+
+
 class Pyflakes(Command):
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
-        module ='./0_prod/'+raw_input ("Please insert module name.\n\
-                                        client.py\n\
-                                        server.py\n\
-                                        setconnect.py\n\
-                                        createbase.py\n")
-        rez = commands.getstatusoutput('pyflakes %s' % (module))
-        if rez == (0, ''):
-            rez = 'No errors'
-        raise SystemExit(rez)
+        run_check('pyflakes')
 
 
 class Tests(Command):
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         rez = subprocess.call([sys.executable,\
                               './tests/stest.py'])
@@ -55,10 +68,13 @@ class Tests(Command):
 
 class Testc(Command):
     user_options = []
+
     def initialize_options(self):
         pass
+
     def finalize_options(self):
         pass
+
     def run(self):
         rez = subprocess.call([sys.executable,\
                               './tests/ctest.py'])
@@ -75,8 +91,8 @@ setup(name='0_prod',
       data_files=['Readme'],
       package_data={'0_prod': ['./etc/conf.cnf']},
       scripts=['setconnect.py'],
-      cmdclass={'pep8':Pep8,
-                'pyflakes':Pyflakes,
-                'stest':Tests,
-                'ctest':Testc}
+      cmdclass={'pep8': Pep8,
+                'pyflakes': Pyflakes,
+                'stest': Tests,
+                'ctest': Testc}
      )

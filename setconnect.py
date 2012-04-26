@@ -1,10 +1,10 @@
-import sys
 import ConfigParser
 
+
 class Connect(object):
-"""Create connect object"""
+    """Create connect object"""
     def __init__(self):
-    """Read options for RabbitMQ and MySQL connections"""
+        """Read options for RabbitMQ and MySQL connections"""
         config = ConfigParser.RawConfigParser()
         config.read('./etc/conf.cnf')
         self.mhost = config.get("MySQLopts", "host")
